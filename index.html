@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IR Email Marketing Compliance Quiz</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Welcome Screen -->
+        <div id="welcome-screen" class="screen active">
+            <div class="welcome-content">
+                <div class="logo">
+                    <div class="logo-icon"></div>
+                </div>
+                <h1 class="welcome-title">IR Email Marketing Compliance Quiz</h1>
+                <h2 class="welcome-subtitle">Test Your Knowledge of CAN-SPAM, GDPR & CASL</h2>
+                <div class="welcome-description">
+                    <p>This quiz will test your understanding of email marketing compliance requirements for investor relations professionals across three major jurisdictions:</p>
+                    <ul class="compliance-laws">
+                        <li><span class="law-casl">CASL</span> - Canada's Anti-Spam Legislation</li>
+                        <li><span class="law-canspam">CAN-SPAM</span> - US Commercial Email Rules</li>
+                        <li><span class="law-gdpr">GDPR</span> - EU General Data Protection Regulation</li>
+                    </ul>
+                    <p>Each question presents a real-world scenario with detailed legal analysis.</p>
+                </div>
+                <div class="quiz-info">
+                    <div class="quiz-stats">
+                        <div class="stat-item">
+                            <span class="stat-number">10</span>
+                            <span class="stat-label">Questions</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">~15</span>
+                            <span class="stat-label">Minutes</span>
+                        </div>
+                    </div>
+                </div>
+                <button id="start-quiz-btn" class="btn btn--primary btn--lg">Start Quiz</button>
+            </div>
+        </div>
+
+        <!-- Quiz Screen -->
+        <div id="quiz-screen" class="screen">
+            <div class="quiz-header">
+                <div class="progress-info">
+                    <span id="question-counter" class="question-counter">Question 1 of 10</span>
+                    <div class="progress-bar">
+                        <div id="progress-fill" class="progress-fill"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="quiz-content">
+                <div class="scenario-box">
+                    <h3>Scenario</h3>
+                    <p id="scenario-text"></p>
+                </div>
+                
+                <div class="options-container">
+                    <div id="options-list" class="options-list"></div>
+                </div>
+                
+                <div class="quiz-actions">
+                    <button id="submit-answer-btn" class="btn btn--primary" disabled>Submit Answer</button>
+                    <div class="navigation-buttons">
+                        <button id="prev-btn" class="btn btn--secondary" style="display: none;">Previous</button>
+                        <button id="next-btn" class="btn btn--secondary" style="display: none;">Next Question</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Feedback Screen -->
+        <div id="feedback-screen" class="screen">
+            <div class="feedback-content">
+                <div id="feedback-status" class="feedback-status">
+                    <div class="status-icon"></div>
+                    <h3 id="feedback-title"></h3>
+                </div>
+                
+                <div class="correct-answer">
+                    <h4>Correct Answer</h4>
+                    <p id="correct-answer-text"></p>
+                </div>
+                
+                <div class="explanation">
+                    <h4>Explanation</h4>
+                    <p id="explanation-text"></p>
+                </div>
+                
+                <div class="legal-analysis">
+                    <h4>Legal Analysis</h4>
+                    <div class="analysis-grid">
+                        <div class="analysis-item casl">
+                            <h5><span class="law-casl">CASL</span></h5>
+                            <p id="casl-analysis"></p>
+                        </div>
+                        <div class="analysis-item canspam">
+                            <h5><span class="law-canspam">CAN-SPAM</span></h5>
+                            <p id="canspam-analysis"></p>
+                        </div>
+                        <div class="analysis-item gdpr">
+                            <h5><span class="law-gdpr">GDPR</span></h5>
+                            <p id="gdpr-analysis"></p>
+                        </div>
+                    </div>
+                </div>
+                
+                <button id="continue-btn" class="btn btn--primary">Continue to Next Question</button>
+            </div>
+        </div>
+
+        <!-- Results Screen -->
+        <div id="results-screen" class="screen">
+            <div class="results-content">
+                <div class="results-header">
+                    <div class="score-circle">
+                        <div class="score-inner">
+                            <span id="final-score" class="score-number">0</span>
+                            <span class="score-total">/ 10</span>
+                        </div>
+                    </div>
+                    <h2>Quiz Complete!</h2>
+                    <p id="score-message" class="score-message"></p>
+                </div>
+                
+                <div class="performance-breakdown">
+                    <h3>Performance Breakdown</h3>
+                    <div class="breakdown-grid">
+                        <div class="breakdown-item">
+                            <span class="breakdown-label">Correct Answers</span>
+                            <span id="correct-count" class="breakdown-value">0</span>
+                        </div>
+                        <div class="breakdown-item">
+                            <span class="breakdown-label">Incorrect Answers</span>
+                            <span id="incorrect-count" class="breakdown-value">0</span>
+                        </div>
+                        <div class="breakdown-item">
+                            <span class="breakdown-label">Accuracy</span>
+                            <span id="accuracy-percent" class="breakdown-value">0%</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="review-section" class="review-section">
+                    <h3>Questions to Review</h3>
+                    <div id="review-list" class="review-list"></div>
+                </div>
+                
+                <div class="results-actions">
+                    <button id="retake-quiz-btn" class="btn btn--primary">Retake Quiz</button>
+                    <button id="review-answers-btn" class="btn btn--secondary">Review All Answers</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
