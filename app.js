@@ -1,6 +1,6 @@
-// IR Email Marketing Compliance Quiz Application
+// Alliance Advisors IR Email Marketing Compliance Quiz
 
-class ComplianceQuiz {
+class AllianceComplianceQuiz {
     constructor() {
         this.quizData = [
             {
@@ -186,36 +186,43 @@ class ComplianceQuiz {
     
     initializeEventListeners() {
         // Welcome screen
-        document.getElementById('start-quiz-btn').addEventListener('click', () => {
-            this.startQuiz();
-        });
+        const startBtn = document.getElementById('start-quiz-btn');
+        if (startBtn) {
+            startBtn.addEventListener('click', () => this.startQuiz());
+        }
         
         // Quiz screen
-        document.getElementById('submit-answer-btn').addEventListener('click', () => {
-            this.submitAnswer();
-        });
+        const submitBtn = document.getElementById('submit-answer-btn');
+        if (submitBtn) {
+            submitBtn.addEventListener('click', () => this.submitAnswer());
+        }
         
-        document.getElementById('prev-btn').addEventListener('click', () => {
-            this.previousQuestion();
-        });
+        const prevBtn = document.getElementById('prev-btn');
+        if (prevBtn) {
+            prevBtn.addEventListener('click', () => this.previousQuestion());
+        }
         
-        document.getElementById('next-btn').addEventListener('click', () => {
-            this.nextQuestion();
-        });
+        const nextBtn = document.getElementById('next-btn');
+        if (nextBtn) {
+            nextBtn.addEventListener('click', () => this.nextQuestion());
+        }
         
         // Feedback screen
-        document.getElementById('continue-btn').addEventListener('click', () => {
-            this.continueToNext();
-        });
+        const continueBtn = document.getElementById('continue-btn');
+        if (continueBtn) {
+            continueBtn.addEventListener('click', () => this.continueToNext());
+        }
         
         // Results screen
-        document.getElementById('retake-quiz-btn').addEventListener('click', () => {
-            this.retakeQuiz();
-        });
+        const retakeBtn = document.getElementById('retake-quiz-btn');
+        if (retakeBtn) {
+            retakeBtn.addEventListener('click', () => this.retakeQuiz());
+        }
         
-        document.getElementById('review-answers-btn').addEventListener('click', () => {
-            this.reviewAnswers();
-        });
+        const reviewBtn = document.getElementById('review-answers-btn');
+        if (reviewBtn) {
+            reviewBtn.addEventListener('click', () => this.reviewAnswers());
+        }
     }
     
     showScreen(screenId) {
@@ -225,13 +232,17 @@ class ComplianceQuiz {
         });
         
         // Show the target screen
-        document.getElementById(screenId).classList.add('active');
+        const targetScreen = document.getElementById(screenId);
+        if (targetScreen) {
+            targetScreen.classList.add('active');
+        }
     }
     
     startQuiz() {
         this.currentQuestionIndex = 0;
         this.userAnswers = [];
         this.score = 0;
+        this.selectedAnswer = null;
         this.showScreen('quiz-screen');
         this.displayQuestion();
     }
@@ -241,30 +252,43 @@ class ComplianceQuiz {
         const totalQuestions = this.quizData.length;
         
         // Update question counter and progress
-        document.getElementById('question-counter').textContent = 
-            `Question ${this.currentQuestionIndex + 1} of ${totalQuestions}`;
+        const questionCounter = document.getElementById('question-counter');
+        if (questionCounter) {
+            questionCounter.textContent = `Question ${this.currentQuestionIndex + 1} of ${totalQuestions}`;
+        }
         
         const progressPercent = ((this.currentQuestionIndex + 1) / totalQuestions) * 100;
-        document.getElementById('progress-fill').style.width = `${progressPercent}%`;
+        const progressFill = document.getElementById('progress-fill');
+        if (progressFill) {
+            progressFill.style.width = `${progressPercent}%`;
+        }
         
         // Update scenario text
-        document.getElementById('scenario-text').textContent = question.scenario;
+        const scenarioText = document.getElementById('scenario-text');
+        if (scenarioText) {
+            scenarioText.textContent = question.scenario;
+        }
         
         // Create option buttons
         const optionsList = document.getElementById('options-list');
-        optionsList.innerHTML = '';
-        
-        question.options.forEach((option, index) => {
-            const button = document.createElement('button');
-            button.className = 'option-button';
-            button.textContent = option;
-            button.addEventListener('click', () => this.selectOption(index, button));
-            optionsList.appendChild(button);
-        });
+        if (optionsList) {
+            optionsList.innerHTML = '';
+            
+            question.options.forEach((option, index) => {
+                const button = document.createElement('button');
+                button.className = 'option-button';
+                button.textContent = option;
+                button.addEventListener('click', () => this.selectOption(index, button));
+                optionsList.appendChild(button);
+            });
+        }
         
         // Reset selected answer and submit button
         this.selectedAnswer = null;
-        document.getElementById('submit-answer-btn').disabled = true;
+        const submitBtn = document.getElementById('submit-answer-btn');
+        if (submitBtn) {
+            submitBtn.disabled = true;
+        }
         
         // Update navigation buttons
         this.updateNavigationButtons();
@@ -281,7 +305,10 @@ class ComplianceQuiz {
         this.selectedAnswer = index;
         
         // Enable submit button
-        document.getElementById('submit-answer-btn').disabled = false;
+        const submitBtn = document.getElementById('submit-answer-btn');
+        if (submitBtn) {
+            submitBtn.disabled = false;
+        }
     }
     
     submitAnswer() {
@@ -315,34 +342,55 @@ class ComplianceQuiz {
         const feedbackStatus = document.getElementById('feedback-status');
         const feedbackTitle = document.getElementById('feedback-title');
         
-        if (isCorrect) {
-            feedbackStatus.className = 'feedback-status correct';
-            feedbackTitle.textContent = 'Correct!';
-        } else {
-            feedbackStatus.className = 'feedback-status incorrect';
-            feedbackTitle.textContent = 'Incorrect';
+        if (feedbackStatus && feedbackTitle) {
+            if (isCorrect) {
+                feedbackStatus.className = 'feedback-status correct';
+                feedbackTitle.textContent = 'Correct!';
+            } else {
+                feedbackStatus.className = 'feedback-status incorrect';
+                feedbackTitle.textContent = 'Incorrect';
+            }
         }
         
         // Find and display correct answer
         const correctOption = question.options.find(option => 
             option.charAt(0) === question.correct_answer
         );
-        document.getElementById('correct-answer-text').textContent = correctOption;
+        const correctAnswerText = document.getElementById('correct-answer-text');
+        if (correctAnswerText) {
+            correctAnswerText.textContent = correctOption || '';
+        }
         
         // Display explanation
-        document.getElementById('explanation-text').textContent = question.explanation;
+        const explanationText = document.getElementById('explanation-text');
+        if (explanationText) {
+            explanationText.textContent = question.explanation;
+        }
         
         // Display legal analysis
-        document.getElementById('casl-analysis').textContent = question.legal_analysis.CASL;
-        document.getElementById('canspam-analysis').textContent = question.legal_analysis.CAN_SPAM;
-        document.getElementById('gdpr-analysis').textContent = question.legal_analysis.GDPR;
+        const caslAnalysis = document.getElementById('casl-analysis');
+        if (caslAnalysis) {
+            caslAnalysis.textContent = question.legal_analysis.CASL;
+        }
+        
+        const canspamAnalysis = document.getElementById('canspam-analysis');
+        if (canspamAnalysis) {
+            canspamAnalysis.textContent = question.legal_analysis.CAN_SPAM;
+        }
+        
+        const gdprAnalysis = document.getElementById('gdpr-analysis');
+        if (gdprAnalysis) {
+            gdprAnalysis.textContent = question.legal_analysis.GDPR;
+        }
         
         // Update continue button text
         const continueBtn = document.getElementById('continue-btn');
-        if (this.currentQuestionIndex < this.quizData.length - 1) {
-            continueBtn.textContent = 'Continue to Next Question';
-        } else {
-            continueBtn.textContent = 'View Results';
+        if (continueBtn) {
+            if (this.currentQuestionIndex < this.quizData.length - 1) {
+                continueBtn.textContent = 'Continue to Next Question';
+            } else {
+                continueBtn.textContent = 'View Results';
+            }
         }
     }
     
@@ -375,8 +423,8 @@ class ComplianceQuiz {
         const nextBtn = document.getElementById('next-btn');
         
         // Hide navigation buttons in quiz mode - only show after answer submission
-        prevBtn.style.display = 'none';
-        nextBtn.style.display = 'none';
+        if (prevBtn) prevBtn.style.display = 'none';
+        if (nextBtn) nextBtn.style.display = 'none';
     }
     
     showResults() {
@@ -388,24 +436,42 @@ class ComplianceQuiz {
         const accuracy = Math.round((correctAnswers / totalQuestions) * 100);
         
         // Update score display
-        document.getElementById('final-score').textContent = correctAnswers;
+        const finalScore = document.getElementById('final-score');
+        if (finalScore) {
+            finalScore.textContent = correctAnswers.toString();
+        }
         
         // Update score message
         const scoreMessage = document.getElementById('score-message');
-        if (accuracy >= 90) {
-            scoreMessage.textContent = 'Excellent! You have a strong understanding of email marketing compliance.';
-        } else if (accuracy >= 70) {
-            scoreMessage.textContent = 'Good work! You have a solid grasp of the basics with room for improvement.';
-        } else if (accuracy >= 50) {
-            scoreMessage.textContent = 'Fair performance. Consider reviewing the key compliance requirements.';
-        } else {
-            scoreMessage.textContent = 'More study needed. Focus on understanding the fundamental compliance differences.';
+        if (scoreMessage) {
+            if (accuracy >= 90) {
+                scoreMessage.textContent = 'Excellent! You demonstrate exceptional understanding of email marketing compliance across all three jurisdictions.';
+            } else if (accuracy >= 80) {
+                scoreMessage.textContent = 'Very Good! You have a strong grasp of compliance requirements with minor areas for improvement.';
+            } else if (accuracy >= 70) {
+                scoreMessage.textContent = 'Good Work! You understand the fundamentals but should review specific regulatory differences.';
+            } else if (accuracy >= 60) {
+                scoreMessage.textContent = 'Fair Performance. Consider additional training on CASL, CAN-SPAM, and GDPR requirements.';
+            } else {
+                scoreMessage.textContent = 'Additional Study Recommended. Focus on understanding the core compliance principles for each jurisdiction.';
+            }
         }
         
         // Update performance breakdown
-        document.getElementById('correct-count').textContent = correctAnswers;
-        document.getElementById('incorrect-count').textContent = incorrectAnswers;
-        document.getElementById('accuracy-percent').textContent = `${accuracy}%`;
+        const correctCount = document.getElementById('correct-count');
+        if (correctCount) {
+            correctCount.textContent = correctAnswers.toString();
+        }
+        
+        const incorrectCount = document.getElementById('incorrect-count');
+        if (incorrectCount) {
+            incorrectCount.textContent = incorrectAnswers.toString();
+        }
+        
+        const accuracyPercent = document.getElementById('accuracy-percent');
+        if (accuracyPercent) {
+            accuracyPercent.textContent = `${accuracy}%`;
+        }
         
         // Show review section for incorrect answers
         this.displayReviewSection();
@@ -414,6 +480,8 @@ class ComplianceQuiz {
     displayReviewSection() {
         const reviewSection = document.getElementById('review-section');
         const reviewList = document.getElementById('review-list');
+        
+        if (!reviewSection || !reviewList) return;
         
         const incorrectAnswers = this.userAnswers.filter(answer => !answer.isCorrect);
         
@@ -425,7 +493,7 @@ class ComplianceQuiz {
         reviewSection.style.display = 'block';
         reviewList.innerHTML = '';
         
-        incorrectAnswers.forEach((answer, index) => {
+        incorrectAnswers.forEach((answer) => {
             const reviewItem = document.createElement('div');
             reviewItem.className = 'review-item';
             
@@ -437,7 +505,8 @@ class ComplianceQuiz {
             reviewItem.innerHTML = `
                 <h4>Question ${questionNumber}</h4>
                 <p><strong>Your answer:</strong> ${answer.selectedText}</p>
-                <p><strong>Correct answer:</strong> ${correctOption}</p>
+                <p><strong>Correct answer:</strong> ${correctOption || 'Not found'}</p>
+                <p><strong>Key insight:</strong> ${answer.question.explanation}</p>
             `;
             
             reviewList.appendChild(reviewItem);
@@ -453,13 +522,51 @@ class ComplianceQuiz {
     }
     
     reviewAnswers() {
-        // For now, just restart the quiz - in a more complex app, 
-        // this could navigate through all questions with answers shown
-        this.retakeQuiz();
+        // Show all questions with answers for review
+        this.currentQuestionIndex = 0;
+        this.showScreen('quiz-screen');
+        this.displayReviewMode();
+    }
+    
+    displayReviewMode() {
+        // For now, restart the quiz - in a more comprehensive implementation,
+        // this could show a special review mode with all answers visible
+        this.startQuiz();
     }
 }
 
-// Initialize the quiz when the page loads
+// Initialize the Alliance Advisors IR Compliance Quiz when the page loads
 document.addEventListener('DOMContentLoaded', () => {
-    new ComplianceQuiz();
+    console.log('Alliance Advisors IR Email Marketing Compliance Quiz Loading...');
+    
+    // Small delay to ensure all DOM elements are ready
+    setTimeout(() => {
+        try {
+            new AllianceComplianceQuiz();
+            console.log('Quiz initialized successfully');
+        } catch (error) {
+            console.error('Error initializing quiz:', error);
+        }
+    }, 100);
+});
+
+// Additional utility functions for the Alliance brand experience
+function addBrandAnimations() {
+    // Add subtle entrance animations
+    const welcomeContent = document.querySelector('.welcome-content');
+    if (welcomeContent) {
+        welcomeContent.style.opacity = '0';
+        welcomeContent.style.transform = 'translateY(20px)';
+        
+        setTimeout(() => {
+            welcomeContent.style.transition = 'all 0.8s ease-out';
+            welcomeContent.style.opacity = '1';
+            welcomeContent.style.transform = 'translateY(0)';
+        }, 200);
+    }
+}
+
+// Initialize brand animations
+document.addEventListener('DOMContentLoaded', () => {
+    setTimeout(addBrandAnimations, 300);
 });
